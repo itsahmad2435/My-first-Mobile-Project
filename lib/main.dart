@@ -8,6 +8,9 @@ import 'screens/feedback.dart';
 import 'screens/about.dart';
 import 'screens/contact.dart';
 import 'screens/history.dart';
+import 'screens/deals.dart';
+import 'screens/rider.dart';
+import 'screens/developer.dart';
 import 'drawer.dart';
 
 void main() async {
@@ -33,6 +36,9 @@ class MyApp extends StatelessWidget {
         '/about': (context) => AboutScreen(),
         '/contact': (context) => ContactScreen(),
         '/history': (context) => HistoryScreen(),
+        '/deals': (context) => DealsScreen(),
+        '/rider': (context) => RiderScreen(),
+        '/developer': (context) => const DeveloperVisionScreen(),
       },
     );
   }

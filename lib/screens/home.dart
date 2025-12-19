@@ -3,6 +3,7 @@ import '../drawer.dart';
 import 'about.dart';
 import 'contact.dart';
 import 'feedback.dart';
+import 'products.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -53,115 +54,113 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// Home content
 class HomeContent extends StatelessWidget {
   const HomeContent({Key? key}) : super(key: key);
+
+  final List<Map<String, String>> pizzas = const [
+    {"name": "Margherita", "price": "899", "image": "assets/1.jpeg"},
+    {"name": "Pepperoni", "price": "1099", "image": "assets/2.jpeg"},
+    {"name": "Veggie Delight", "price": "749", "image": "assets/6.jpeg"},
+    {"name": "BBQ Chicken", "price": "1299", "image": "assets/7.jpeg"},
+    {"name": "Cheese Burst", "price": "1149", "image": "assets/8.jpeg"},
+    {"name": "Mexican", "price": "1199", "image": "assets/9.jpeg"},
+  ];
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome to Pizza Online',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.redAccent,
-              ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Hot & Fresh Pizzas 🍕",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.redAccent),
+          ),
+          const SizedBox(height: 10),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: pizzas.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 0.65,
+            ),
+            itemBuilder: (context, index) {
+              final pizza = pizzas[index];
+              return PizzaCard(
+                name: pizza["name"]!,
+                price: pizza["price"]!,
+                image: pizza["image"]!,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PizzaCard extends StatelessWidget {
+  final String name;
+  final String price;
+  final String image;
+
+  const PizzaCard({Key? key, required this.name, required this.price, required this.image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 5, offset: Offset(2, 2))],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+            child: Image.asset(
+              image,
+              height: 130,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+            child: Text(
+              name,
               textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Hot, Fresh & Delicious Pizzas delivered to your doorstep!',
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 25),
-
-            // First image
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(color: Colors.grey.withOpacity(0.4), spreadRadius: 2, blurRadius: 5)
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/3.jfif',
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+          ),
+          Text(
+            "Rs. $price",
+            style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const ProductsScreen(), // Navigate to Products/Payment
                 ),
-              ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             ),
-            const SizedBox(height: 20),
-
-            // Second image
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(color: Colors.grey.withOpacity(0.4), spreadRadius: 2, blurRadius: 5)
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/4.jfif',
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Third image
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(color: Colors.grey.withOpacity(0.4), spreadRadius: 2, blurRadius: 5)
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  'assets/5.jfif',
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-
-            // Order Now button
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/products');
-              },
-              icon: const Icon(Icons.local_pizza),
-              label: const Text(
-                "Order Now",
-                style: TextStyle(fontSize: 18),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ],
-        ),
+            child: const Text("Order Now"),
+          ),
+        ],
       ),
     );
   }

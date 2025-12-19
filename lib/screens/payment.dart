@@ -5,13 +5,13 @@ import '../drawer.dart';
 class PaymentScreen extends StatefulWidget {
   final String productName;
   final double amount;
-  final String? paymentMethod; // 🔹 optional parameter
+  final String? paymentMethod; // optional parameter
 
   const PaymentScreen({
     super.key,
     required this.productName,
     required this.amount,
-    this.paymentMethod, // 🔹 optional
+    this.paymentMethod,
   });
 
   @override
@@ -27,7 +27,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    // 🔹 initialize selectedMethod with incoming value or default
     selectedMethod = widget.paymentMethod ?? 'Credit/Debit Card';
   }
 
@@ -43,12 +42,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
         'price': widget.amount.toStringAsFixed(2),
         'method': selectedMethod,
         'timestamp': DateTime.now().toString(),
+
+        // 🔹 Rider addition
+        'status': 'Pending',        // initial order status
+        'riderId': 'RIDER_UID',     // replace with actual rider UID if needed
       });
     }
 
     setState(() => isProcessing = false);
 
-    // 🔹 Show success dialog
     if (!mounted) return;
     showDialog(
       context: context,
@@ -62,7 +64,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // close dialog
-              Navigator.pop(context); // go back to previous screen
+              Navigator.pop(context); // go back
             },
             child: const Text("OK"),
           ),

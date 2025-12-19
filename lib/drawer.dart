@@ -12,7 +12,7 @@ class AppDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            // 🔹 Drawer Header with Gradient
+            // 🔹 Drawer Header with Gradient + Background Image
             DrawerHeader(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -23,14 +23,14 @@ class AppDrawer extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.person, size: 40, color: Colors.orange),
+                    backgroundImage: const AssetImage('assets/9.jfif'), // <-- Added your photo
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     'Welcome!',
                     style: TextStyle(
                       color: Colors.white,
@@ -38,7 +38,7 @@ class AppDrawer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Pizza Online App',
                     style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
@@ -58,11 +58,15 @@ class AppDrawer extends StatelessWidget {
             _buildDrawerItem(context,
                 icon: Icons.info, title: 'About', route: '/about'),
             _buildDrawerItem(context,
+                icon: Icons.local_offer, title: 'Deals', route: '/deals'),
+            _buildDrawerItem(context,
                 icon: Icons.contact_mail, title: 'Contact', route: '/contact'),
             _buildDrawerItem(context,
-                icon: Icons.history, title: 'History', route: '/history'), // ✅ Added History
+                icon: Icons.contact_mail, title: 'Rider', route: '/rider'),
             _buildDrawerItem(context,
-                icon: Icons.visibility, title: 'Developer Vision', route: '/Developer_vision'),
+                icon: Icons.history, title: 'History', route: '/history'),
+            _buildDrawerItem(context,
+                icon: Icons.visibility, title: 'Developer Vision', route: '/developer'),
 
             const Divider(thickness: 1, color: Colors.grey),
 
